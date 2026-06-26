@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: theme('colors.background');
+    color: theme('colors.primary');
+  }
+
+  body {
+    @apply m-0 bg-background font-sans antialiased;
+    background-image: radial-gradient(rgba(23, 19, 15, 0.055) 0.7px, transparent 0.7px);
+    background-size: 8px 8px;
+  }
+
+  ::selection {
+    background-color: #681F2C;
+    color: #FFF8E8;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif tracking-[-0.045em];
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply font-sans text-[10px] font-bold uppercase tracking-[0.32em];
+  }
+
+  .poster-grid {
+    background-image:
+      linear-gradient(rgba(23, 19, 15, 0.09) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(23, 19, 15, 0.09) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .graphic-outline {
+    -webkit-text-stroke: 1px currentColor;
+    color: transparent;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
