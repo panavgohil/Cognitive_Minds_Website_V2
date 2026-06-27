@@ -20,6 +20,9 @@ const Dashboard = () => {
   });
   const [tournaments, setTournaments] = useState([]);
   const [connectionStatus, setConnectionStatus] = useState(null);
+  const [currentUserId, setCurrentUserId] = useState(null);
+  const [connections, setConnections] = useState([]);
+  const [showConnectionsModal, setShowConnectionsModal] = useState(false);
   const [incomingRequests, setIncomingRequests] = useState([]);
   const [showNotifications, setShowNotifications] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
@@ -36,12 +39,15 @@ const Dashboard = () => {
       supabase.from('tournaments').select('*').eq('user_id', targetId),
     ]);
 
-    if (user && user.id !== targetId) {
-      const { data } = await supabase.from('connections')
-        .select('status')
-        .or(`sender_id.eq.${user.id},receiver_id.eq.${user.id}`)
-        .or(`sender_id.eq.${targetId},receiver_id.eq.${targetId}`);
-      if (data && data.length > 0) setConnectionStatus(data[0].status);
+    if (user) {
+      setCurrentUserId(user.id);
+      if (user.id !== targetId) {
+        const { data } = await supabase.from('connections')
+          .select('status')
+          .or(`sender_id.eq.${user.id},receiver_id.eq.${user.id}`)
+          .or(`sender_id.eq.${targetId},receiver_id.eq.${targetId}`);
+        if (data && data.length > 0) setConnectionStatus(data[0].status);
+      }
     }
 
     if (user) {
@@ -67,17 +73,19 @@ const Dashboard = () => {
       } else {
         setIncomingRequests([]);
       }
+
     }
 
-    return { profile, tourneyData: tourneyData || [] };
+    return { profile, tourneyData: tourneyData || [], targetId };
   };
 
   useEffect(() => {
     let isActive = true;
-    getDashboardData().then(({ profile, tourneyData }) => {
+    getDashboardData().then(({ profile, tourneyData, targetId }) => {
       if (!isActive) return;
       if (profile) setMember(profile);
       setTournaments(tourneyData);
+      refreshConnections(targetId);
     });
     return () => { isActive = false; };
   }, [userId]);
@@ -102,9 +110,10 @@ const Dashboard = () => {
   }, []);
 
   const refreshData = async () => {
-    const { profile, tourneyData } = await getDashboardData();
+    const { profile, tourneyData, targetId } = await getDashboardData();
     if (profile) setMember(profile);
     setTournaments(tourneyData);
+    await refreshConnections(targetId);
   };
 
   const handleConnect = async () => {
@@ -153,11 +162,37 @@ const Dashboard = () => {
   const handleAcceptRequest = async (requestId) => {
     await supabase.from('connections').update({ status: 'connected' }).eq('id', requestId);
     await refreshPendingRequests();
+    await refreshConnections(userId || member.id);
   };
 
   const handleDeclineRequest = async (requestId) => {
     await supabase.from('connections').update({ status: 'declined' }).eq('id', requestId);
     await refreshPendingRequests();
+  };
+
+  const openConnectionsModal = async () => {
+    await refreshConnections(userId || member.id);
+    setShowConnectionsModal(true);
+  };
+
+  const refreshConnections = async (profileId) => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+    const targetId = profileId || userId || user.id;
+
+    const { data: connectedRows } = await supabase
+      .from('connections')
+      .select('sender_id, receiver_id')
+      .or(`sender_id.eq.${targetId},receiver_id.eq.${targetId}`)
+      .eq('status', 'connected');
+
+    const connectedIds = [...new Set((connectedRows || []).flatMap((row) => [row.sender_id, row.receiver_id]).filter((id) => id && id !== targetId))];
+    if (connectedIds.length > 0) {
+      const { data: connectedProfiles } = await supabase.from('profiles').select('id, full_name, role, branch, current_year').in('id', connectedIds);
+      setConnections(connectedProfiles || []);
+    } else {
+      setConnections([]);
+    }
   };
 
   const handleSearch = async (term) => {
@@ -218,6 +253,10 @@ const Dashboard = () => {
     await supabase.auth.signOut();
     navigate('/');
   };
+
+  const connectionsHeading = userId && member.full_name && currentUserId !== userId
+    ? `${member.full_name}${member.full_name.endsWith('s') ? "'" : "'s"} connections`
+    : 'Your connections';
 
   return (
     <div className="min-h-screen bg-transparent pt-28 pb-20">
@@ -313,6 +352,9 @@ const Dashboard = () => {
                 <p className="text-sm font-sans font-semibold uppercase text-accent">{member.role || "Role"}</p>
                 <div><p className="text-[10px] font-bold uppercase tracking-widest text-secondary/70 mb-1">Branch</p><p className="text-sm font-sans text-primary">{member.branch || "N/A"}</p></div>
                 <div><p className="text-[10px] font-bold uppercase tracking-widest text-secondary/70 mb-1">Year</p><p className="text-sm font-sans text-primary">{member.current_year || "N/A"}</p></div>
+                <div>
+                  <button onClick={openConnectionsModal} className="text-primary underline text-sm font-semibold">Connections</button>
+                </div>
                 <div className="absolute bottom-6 right-8 flex gap-4">
                   {member.linkedin_url && <a href={member.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-accent"><FaLinkedin size={24} /></a>}
                   {member.instagram_url && <a href={member.instagram_url} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-accent"><FaInstagram size={24} /></a>}
@@ -342,6 +384,36 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+
+      {showConnectionsModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+          <div className="w-full max-w-2xl rounded-3xl bg-white p-6 shadow-2xl">
+            <div className="mb-4 flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs uppercase tracking-[0.3em] text-accent">Connections</p>
+                <h2 className="text-2xl font-serif text-primary">{connectionsHeading}</h2>
+              </div>
+              <button onClick={() => setShowConnectionsModal(false)} className="text-secondary hover:text-primary text-sm font-semibold">Close</button>
+            </div>
+            {connections.length > 0 ? (
+              <div className="grid gap-3">
+                {connections.map((connection) => (
+                  <button
+                    key={connection.id}
+                    onClick={() => { setShowConnectionsModal(false); navigate(`/dashboard/${connection.id}`); }}
+                    className="w-full text-left rounded-2xl border border-primary/10 bg-gray-50 p-4 text-left transition hover:bg-gray-100"
+                  >
+                    <p className="text-lg font-semibold text-primary">{connection.full_name}</p>
+                    <p className="text-sm text-secondary">{connection.role || 'Member'}</p>
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-secondary">No connections yet.</p>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
