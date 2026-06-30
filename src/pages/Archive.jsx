@@ -3,28 +3,30 @@ import { RotateCcw, SlidersHorizontal } from 'lucide-react';
 import Navbar from '../components/common/Navbar';
 
 const motionsDatabase = [
-  { id: 1, text: "THS the usage of statistical risk assessment by US courts in pre-trial decisions", category: "Economics & Policy", topics: ["Law", "Artificial Intelligence"], competition: "19th IITB IV", year: "2025", round: "Round 1" },
-  { id: 2, text: "THS governments banning foreign ownership of media covering local or national news", category: "Technology & Media", topics: ["Media", "Government Regulation"], competition: "19th IITB IV", year: "2025", round: "Round 2" },
-  { id: 3, text: "THBT multilateral development banks should cease financing all greenfield infrastructure in environmentally sensitive regions (Amazon, Congo Basin, Himalayas, etc.)", category: "Economics & Policy", topics: ["Environment", "Development"], competition: "19th IITB IV", year: "2025", round: "Round 3" },
-  { id: 4, text: "In rapidly urbanising regions, THS local governments actively employing Land Value Capture measures", category: "Economics & Policy", topics: ["Urban Policy", "Economics"], competition: "19th IITB IV", year: "2025", round: "Round 4" },
-  { id: 5, text: "THP a world with a dominant norm of maintaining both a polite public persona and emotional distance toward those outside one's immediate circle, as opposed to a world with a dominant norm of being emotionally expressive and authentic with those outside one's immediate circle", category: "Philosophy & Ethics", topics: ["Relationships", "Social Norms"], competition: "19th IITB IV", year: "2025", round: "Round 5" },
-  { id: 6, text: "THS social justice movements in South Asia framing their advocacy through the concept of dharma (duty and moral responsibility)", category: "Social Justice & Feminism", topics: ["Religion", "Social Movements"], competition: "19th IITB IV", year: "2025", round: "Pre-Quarters" },
-  { id: 7, text: "THBT Moldova should pursue accelerated EU accession, even at the expense of its relations with Russia.", category: "International Relations", topics: ["Geopolitics", "European Union"], competition: "19th IITB IV", year: "2025", round: "Quarterfinals" },
-  { id: 8, text: "THR the rise of social-media-based self-disclosure groups for mental health", category: "Technology & Media", topics: ["Mental Health", "Social Media"], competition: "19th IITB IV", year: "2025", round: "Novice Semifinals" },
-  { id: 9, text: "THBT adults have a greater moral obligation towards vulnerable strangers than towards their self-sufficient parents", category: "Philosophy & Ethics", topics: ["Morality", "Family"], competition: "19th IITB IV", year: "2025", round: "Semifinals" },
-  { id: 10, text: "THBT feminists should support the legalization of surrogacy for profit.", category: "Social Justice & Feminism", topics: ["Feminism", "Surrogacy"], competition: "19th IITB IV", year: "2025", round: "Novice Finals" },
-  { id: 11, text: "During times of ethno-religious conflicts, THS governments deploying the national military at religious places of worship that are likely to be affected by the conflict", category: "International Relations", topics: ["Religion", "Conflict"], competition: "19th IITB IV", year: "2025", round: "Grand Final" },
+  { id: 1, text: "THS the usage of statistical risk assessment by US courts in pre-trial decisions", category: "Economics & Policy", topics: ["Law", "Artificial Intelligence"], competition: "19th IITB IV", year: "2025", round: "Round 1", format: "BPD" },
+  { id: 2, text: "THS governments banning foreign ownership of media covering local or national news", category: "Technology & Media", topics: ["Media", "Government Regulation"], competition: "19th IITB IV", year: "2025", round: "Round 2", format: "BPD" },
+  { id: 3, text: "THBT multilateral development banks should cease financing all greenfield infrastructure in environmentally sensitive regions (Amazon, Congo Basin, Himalayas, etc.)", category: "Economics & Policy", topics: ["Environment", "Development"], competition: "19th IITB IV", year: "2025", round: "Round 3", format: "BPD" },
+  { id: 4, text: "In rapidly urbanising regions, THS local governments actively employing Land Value Capture measures", category: "Economics & Policy", topics: ["Urban Policy", "Economics"], competition: "19th IITB IV", year: "2025", round: "Round 4", format: "BPD" },
+  { id: 5, text: "THP a world with a dominant norm of maintaining both a polite public persona and emotional distance toward those outside one's immediate circle, as opposed to a world with a dominant norm of being emotionally expressive and authentic with those outside one's immediate circle", category: "Philosophy & Ethics", topics: ["Relationships", "Social Norms"], competition: "19th IITB IV", year: "2025", round: "Round 5", format: "BPD" },
+  { id: 6, text: "THS social justice movements in South Asia framing their advocacy through the concept of dharma (duty and moral responsibility)", category: "Social Justice & Feminism", topics: ["Religion", "Social Movements"], competition: "19th IITB IV", year: "2025", round: "Pre-Quarters", format: "BPD" },
+  { id: 7, text: "THBT Moldova should pursue accelerated EU accession, even at the expense of its relations with Russia.", category: "International Relations", topics: ["Geopolitics", "European Union"], competition: "19th IITB IV", year: "2025", round: "Quarterfinals", format: "BPD" },
+  { id: 8, text: "THR the rise of social-media-based self-disclosure groups for mental health", category: "Technology & Media", topics: ["Mental Health", "Social Media"], competition: "19th IITB IV", year: "2025", round: "Novice Semifinals", format: "BPD" },
+  { id: 9, text: "THBT adults have a greater moral obligation towards vulnerable strangers than towards their self-sufficient parents", category: "Philosophy & Ethics", topics: ["Morality", "Family"], competition: "19th IITB IV", year: "2025", round: "Semifinals", format: "BPD" },
+  { id: 10, text: "THBT feminists should support the legalization of surrogacy for profit.", category: "Social Justice & Feminism", topics: ["Feminism", "Surrogacy"], competition: "19th IITB IV", year: "2025", round: "Novice Finals", format: "BPD" },
+  { id: 11, text: "During times of ethno-religious conflicts, THS governments deploying the national military at religious places of worship that are likely to be affected by the conflict", category: "International Relations", topics: ["Religion", "Conflict"], competition: "19th IITB IV", year: "2025", round: "Grand Final", format: "BPD" },
 ];
 
 const categories = ["All", "Economics & Policy", "International Relations", "Philosophy & Ethics", "Social Justice & Feminism", "Technology & Media"];
 const competitions = ["All Competitions", ...new Set(motionsDatabase.map((motion) => motion.competition))];
 const topics = ["All Topics", ...[...new Set(motionsDatabase.flatMap((motion) => motion.topics))].sort()];
+const formats = ["All Formats", ...new Set(motionsDatabase.map((motion) => motion.format))].sort();
 
 const Archive = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
   const [activeCompetition, setActiveCompetition] = useState('All Competitions');
   const [activeTopic, setActiveTopic] = useState('All Topics');
+  const [activeFormat, setActiveFormat] = useState('All Formats');
 
   const filteredMotions = motionsDatabase.filter((motion) => {
     const query = searchQuery.toLowerCase().trim();
@@ -35,21 +37,24 @@ const Archive = () => {
     const matchesCategory = activeCategory === 'All' || motion.category === activeCategory;
     const matchesCompetition = activeCompetition === 'All Competitions' || motion.competition === activeCompetition;
     const matchesTopic = activeTopic === 'All Topics' || motion.topics.includes(activeTopic);
+    const matchesFormat = activeFormat === 'All Formats' || motion.format === activeFormat;
 
-    return matchesSearch && matchesCategory && matchesCompetition && matchesTopic;
+    return matchesSearch && matchesCategory && matchesCompetition && matchesTopic && matchesFormat;
   });
 
   const hasActiveFilters =
     searchQuery ||
     activeCategory !== 'All' ||
     activeCompetition !== 'All Competitions' ||
-    activeTopic !== 'All Topics';
+    activeTopic !== 'All Topics' ||
+    activeFormat !== 'All Formats';
 
   const resetFilters = () => {
     setSearchQuery('');
     setActiveCategory('All');
     setActiveCompetition('All Competitions');
     setActiveTopic('All Topics');
+    setActiveFormat('All Formats');
   };
 
   return (
@@ -85,7 +90,7 @@ const Archive = () => {
               )}
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-3">
               <label className="flex flex-col gap-2">
                 <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-secondary">Competition</span>
                 <select value={activeCompetition} onChange={(event) => setActiveCompetition(event.target.value)} className="w-full border-2 border-primary bg-background px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-accent">
@@ -97,6 +102,13 @@ const Archive = () => {
                 <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-secondary">Topic</span>
                 <select value={activeTopic} onChange={(event) => setActiveTopic(event.target.value)} className="w-full border-2 border-primary bg-background px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-accent">
                   {topics.map((topic) => <option key={topic} value={topic}>{topic}</option>)}
+                </select>
+              </label>
+
+              <label className="flex flex-col gap-2">
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-secondary">Format</span>
+                <select value={activeFormat} onChange={(event) => setActiveFormat(event.target.value)} className="w-full border-2 border-primary bg-background px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-accent">
+                  {formats.map((format) => <option key={format} value={format}>{format}</option>)}
                 </select>
               </label>
             </div>
@@ -137,7 +149,7 @@ const Archive = () => {
                 </div>
               </div>
               <div className="border-t border-primary/20 pt-4 text-[10px] font-bold uppercase tracking-widest text-secondary">
-                {motion.competition} • {motion.round} • {motion.year}
+                {motion.format} • {motion.competition} • {motion.round} • {motion.year}
               </div>
             </article>
           ))}

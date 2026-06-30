@@ -21,6 +21,7 @@ const Dashboard = () => {
   const [tournaments, setTournaments] = useState([]);
   const [connectionStatus, setConnectionStatus] = useState(null);
   const [currentUserId, setCurrentUserId] = useState(null);
+  const [resolvedTargetId, setResolvedTargetId] = useState(null);
   const [connections, setConnections] = useState([]);
   const [showConnectionsModal, setShowConnectionsModal] = useState(false);
   const [incomingRequests, setIncomingRequests] = useState([]);
@@ -29,10 +30,46 @@ const Dashboard = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const navigate = useNavigate();
 
+  // Helper function to convert slug to name
+  const slugToName = (slug) => {
+    if (!slug) return null;
+    return slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  };
+
+  // Check if a string is a UUID
+  const isUUID = (str) => {
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    return uuidRegex.test(str);
+  };
+
   const getDashboardData = async () => {
     const { data: { user } } = await supabase.auth.getUser();
-    const targetId = userId || user?.id;
-    if (!targetId) return { profile: null, tourneyData: [] };
+    
+    let targetId = userId;
+    
+    // If userId is not a UUID, treat it as a name slug and lookup the profile
+    if (userId && !isUUID(userId)) {
+      const name = slugToName(userId);
+      console.log('Looking up profile for name:', name);
+      
+      const { data: profiles, error } = await supabase
+        .from('profiles')
+        .select('id, full_name')
+        .ilike('full_name', `%${name}%`);
+      
+      console.log('Search results:', profiles, error);
+      
+      if (profiles && profiles.length > 0) {
+        targetId = profiles[0].id;
+        console.log('Found profile ID:', targetId);
+      } else {
+        console.log('No profile found for name:', name);
+        return { profile: null, tourneyData: [], targetId: null };
+      }
+    }
+    
+    targetId = targetId || user?.id;
+    if (!targetId) return { profile: null, tourneyData: [], targetId: null };
 
     const [{ data: profile }, { data: tourneyData }] = await Promise.all([
       supabase.from('profiles').select('*').eq('id', targetId).single(),
@@ -85,6 +122,7 @@ const Dashboard = () => {
       if (!isActive) return;
       if (profile) setMember(profile);
       setTournaments(tourneyData);
+      setResolvedTargetId(targetId);
       refreshConnections(targetId);
     });
     return () => { isActive = false; };
@@ -118,9 +156,9 @@ const Dashboard = () => {
 
   const handleConnect = async () => {
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user || !userId) return;
+    if (!user || !resolvedTargetId) return;
 
-    const { error } = await supabase.from('connections').insert({ sender_id: user.id, receiver_id: userId, status: 'pending' });
+    const { error } = await supabase.from('connections').insert({ sender_id: user.id, receiver_id: resolvedTargetId, status: 'pending' });
 
     if (error) {
       console.error('Failed to send connection request:', error);
@@ -177,8 +215,8 @@ const Dashboard = () => {
 
   const refreshConnections = async (profileId) => {
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
-    const targetId = profileId || userId || user.id;
+    if (!user || !profileId) return;
+    const targetId = profileId;
 
     const { data: connectedRows } = await supabase
       .from('connections')

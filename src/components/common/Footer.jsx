@@ -4,19 +4,12 @@ import { FaInstagram, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
 
 const socialLinks = [
   {
-    label: 'Instagram',
-    href: 'https://www.instagram.com/',
+    href: "https://www.instagram.com/cognitiveminds_dtu/",
     icon: FaInstagram,
   },
   {
-    label: 'LinkedIn',
-    href: 'https://www.linkedin.com/',
+    href: "https://www.linkedin.com/company/cognitive-minds-dtu/posts/?feedView=all",
     icon: FaLinkedinIn,
-  },
-  {
-    label: 'YouTube',
-    href: 'https://www.youtube.com/',
-    icon: FaYoutube,
   },
 ];
 
@@ -26,6 +19,8 @@ const exploreLinks = [
   { label: 'Competitions', to: '/competitions' },
   { label: 'Gallery', to: '/gallery' },
   { label: 'Join the Society', to: '/recruitment' },
+  { label: 'Rulebook', to: '/Rulebook' },
+
 ];
 
 const Footer = () => {

@@ -13,6 +13,7 @@ import Recruitment from './pages/Recruitment';
 import Login from './pages/Login'; 
 import Dashboard from './pages/Dashboard';
 import UpdatePassword from './pages/UpdatePassword';
+import Contingent from "./pages/Contingent";
 
 
 
@@ -35,9 +36,10 @@ function App() {
             <Route path="/recruitment" element={<Recruitment />} />
             <Route path="/login" element={<Login />} />
             <Route path="/update-password" element={<UpdatePassword />} />
-            <Route path="/dashboard/:userId?" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/dashboard/:userId?" element={<Dashboard />} />
+            <Route path="/contingent/:slug" element={<Contingent />} />
             <Route
-              path="/dashboard"
+              path="/protected-dashboard"
               element={
                 <ProtectedRoute>
                   <Dashboard />
