@@ -7,7 +7,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 const navLinks = [
   { name: 'Home', path: '/' },
   { name: 'Council', path: '/council' },
-  { name: 'Archive', path: '/archive' },
+  { name: 'Motion Archive', path: '/archive' },
   { name: 'Competitions', path: '/competitions' },
   { name: 'Rulebook', path: '/rulebook' },
   { name: 'Gallery', path: '/gallery' },
