@@ -4,10 +4,6 @@ import { contingents } from "../data/contingents";
 import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
 
-const nameToSlug = (name) => {
-  return name.toLowerCase().replace(/\s+/g, "-");
-};
-
 export default function Contingent() {
   const { slug } = useParams();
 
@@ -43,16 +39,15 @@ export default function Contingent() {
           <h2 className="text-3xl font-serif text-primary mb-10">Team Members</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {data.members.map((member, index) => (
-              <Link 
+              <div 
                 key={index} 
-                to={`/dashboard/${nameToSlug(member.name)}`}
-                className="border-2 border-primary bg-paper p-8 hover:shadow-poster hover:-translate-y-1 transition-all cursor-pointer"
+                className="border-2 border-primary bg-paper p-8"
               >
-                <h3 className="text-2xl font-serif text-primary mb-4 hover:text-accent transition-colors">{member.name}</h3>
+                <h3 className="text-2xl font-serif text-primary mb-4">{member.name}</h3>
                 <div className="border-t border-primary/20 pt-4">
                   <p className="text-sm uppercase tracking-widest font-bold text-secondary">{member.role}</p>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         </div>
