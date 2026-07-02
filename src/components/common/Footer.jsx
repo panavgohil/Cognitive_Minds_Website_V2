@@ -46,8 +46,7 @@ const Footer = () => {
               Ideas deserve a room with some electricity.
             </h2>
             <p className="mt-7 max-w-lg text-sm leading-7 text-[#F8F4E8]/60 sm:text-base">
-              Cognitive Minds is the debating and public speaking society of
-              Delhi Technological University.
+              Cognitive Minds is DTU&apos;s Debating and Personality development society.
             </p>
           </div>
 

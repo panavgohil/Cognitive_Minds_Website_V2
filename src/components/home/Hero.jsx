@@ -8,17 +8,17 @@ const Hero = () => {
 
   return (
     <section className="poster-grid relative min-h-screen w-full overflow-hidden border-b-2 border-primary pt-20">
-      <div className="absolute right-[-12rem] top-24 h-[34rem] w-[34rem] rounded-full bg-oxblood md:right-[-4rem] md:h-[42rem] md:w-[42rem]" />
+      <div className="absolute right-[-8rem] top-[18rem] h-[20rem] w-[20rem] rounded-full bg-oxblood sm:right-[-10rem] sm:top-24 sm:h-[28rem] sm:w-[28rem] md:right-[-4rem] md:h-[42rem] md:w-[42rem]" />
       <div className="absolute right-[8%] top-[18%] hidden h-40 w-40 rotate-12 border-2 border-primary bg-accent shadow-poster lg:block" />
-      <motion.div variants={containerVariants} initial="hidden" animate="show" className="relative z-10 mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl items-center gap-12 px-6 py-16 lg:grid-cols-12 lg:px-12">
+      <motion.div variants={containerVariants} initial="hidden" animate="show" className="relative z-10 mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl items-start gap-8 px-5 py-10 sm:px-6 sm:py-16 lg:grid-cols-12 lg:items-center lg:gap-12 lg:px-12">
         <div className="lg:col-span-9">
-          <motion.p variants={textVariants} className="eyebrow mb-6 text-oxblood">DTU&apos;s Debating and Personality development society</motion.p>
-          <motion.h1 variants={textVariants} className="max-w-6xl font-serif text-[clamp(5rem,12vw,10.5rem)] font-semibold leading-[0.74] text-primary">
+          <motion.p variants={textVariants} className="eyebrow mb-4 text-oxblood sm:mb-6">DTU&apos;s Debating and Personality development society</motion.p>
+          <motion.h1 variants={textVariants} className="max-w-6xl font-serif text-[clamp(3.4rem,16vw,10.5rem)] font-semibold leading-[0.82] text-primary sm:text-[clamp(4.2rem,13vw,10.5rem)] sm:leading-[0.76]">
             Cognitive
             <span className="block italic text-oxblood">Minds.</span>
           </motion.h1>
-          <motion.div variants={textVariants} className="mt-10 flex max-w-3xl flex-col gap-6 border-l-4 border-accent pl-6 sm:flex-row sm:items-end sm:justify-between">
-            <p className="max-w-lg text-base leading-7 text-secondary md:text-lg">We turn arguments into architecture and speakers into forces the room cannot ignore.</p>
+          <motion.div variants={textVariants} className="mt-8 flex max-w-3xl flex-col gap-4 border-l-4 border-accent pl-5 sm:mt-10 sm:gap-6 sm:pl-6 sm:flex-row sm:items-end sm:justify-between">
+            <p className="max-w-lg text-sm leading-6 text-secondary sm:text-base sm:leading-7 md:text-lg">We turn arguments into architecture and speakers into forces the room cannot ignore.</p>
           </motion.div>
         </div>
         <motion.div variants={logoVariants} className="relative hidden lg:col-span-3 lg:block">
