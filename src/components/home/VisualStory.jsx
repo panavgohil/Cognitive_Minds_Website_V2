@@ -36,7 +36,7 @@ const VisualStory = () => {
       <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-12">
         <div className="lg:col-span-4">
           <p className="eyebrow mb-5 text-oxblood">
-            In the Room / 03
+            In the Room
           </p>
           <h2 className="text-5xl font-semibold leading-[0.9] text-primary md:text-7xl">
             More than a <span className="italic text-oxblood">podium.</span>
@@ -81,9 +81,6 @@ const VisualStory = () => {
               />
             </AnimatePresence>
             <div className="absolute inset-0 bg-gradient-to-t from-primary/35 via-transparent to-transparent" />
-            <p className="absolute bottom-6 left-6 text-[10px] font-bold uppercase tracking-[0.28em] text-white/80">
-              Cognitive Minds on the circuit
-            </p>
           </div>
         </div>
       </div>

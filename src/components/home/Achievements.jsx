@@ -63,7 +63,7 @@ const Achievements = () => {
     <section ref={targetRef} className="relative h-[380vh] bg-primary text-paper">
       <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
         <div className="max-w-7xl mx-auto w-full px-6 lg:px-12 mb-12">
-          <motion.p initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="eyebrow mb-4 text-accent">Hall of Fame / 01</motion.p>
+          <motion.p initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="eyebrow mb-4 text-accent">Hall of Fame</motion.p>
           <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="max-w-4xl text-6xl font-semibold leading-[0.9] text-paper md:text-8xl">Arguments that became <span className="italic text-accent">history.</span></motion.h2>
         </div>
         <motion.div style={{ x }} className="flex gap-8 px-6 lg:px-12 w-max">

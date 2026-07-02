@@ -29,7 +29,7 @@ const Impact = () => {
   return (
     <section className="poster-grid relative flex min-h-screen w-full flex-col justify-center border-y-2 border-primary bg-accent px-6 py-24 md:px-12">
       <div className="max-w-7xl mx-auto w-full mb-16 md:mb-20">
-        <motion.p initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} className="eyebrow mb-4 text-oxblood">Impact / 02</motion.p>
+        <motion.p initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} className="eyebrow mb-4 text-oxblood">Impact</motion.p>
         <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ delay: 0.1 }} className="text-6xl font-semibold leading-[0.9] text-primary md:text-8xl">Proof, not <span className="italic text-oxblood">posture.</span></motion.h2>
       </div>
       <div className="mx-auto w-full max-w-7xl border-2 border-primary bg-background shadow-poster">
