@@ -20,10 +20,10 @@ const Counter = ({ from, to, suffix }) => {
 
 const Impact = () => {
   const stats = [
-    { num: 15, suffix: "+", label: "National Competitions" },
+    { num: 10, suffix: "+", label: "National Competitions" },
     { num: 50, suffix: "+", label: "Active Members" },
-    { num: 1000, suffix: "+", label: "Archived Motions" },
-    { num: 20, suffix: "+", label: "Awards Won" },
+    { num: 100, suffix: "+", label: "Archived Motions" },
+    { num: 15, suffix: "+", label: "Awards Won" },
   ];
 
   return (

@@ -1,22 +1,66 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Trophy, Medal, Star, Crown, Mic } from 'lucide-react';
+import { Trophy, Medal, Crown } from 'lucide-react';
 
 const achievementsData = [
-  { icon: <Crown size={32} strokeWidth={1.5} />, title: "Champions", tournament: "Asian Parliamentary Debate", desc: "Secured the gold in a 64-team national circuit, remaining undefeated.", year: "2024" },
-  { icon: <Medal size={32} strokeWidth={1.5} />, title: "Best Speaker", tournament: "National Law University Open", desc: "Awarded the best individual speaker out of 200+ participants.", year: "2024" },
-  { icon: <Trophy size={32} strokeWidth={1.5} />, title: "Runners Up", tournament: "St. Stephen's Mukharji Memorial", desc: "Reached the grand finals of one of the oldest debate tournaments in the country.", year: "2023" },
-  { icon: <Star size={32} strokeWidth={1.5} />, title: "Quarter-finalists", tournament: "World Universities Debating Champ.", desc: "Represented DTU on the global stage against international Ivy League teams.", year: "2023" },
-  { icon: <Mic size={32} strokeWidth={1.5} />, title: "Best Adjudicator", tournament: "Delhi University Debate Circuit", desc: "Recognized for exceptional judging accuracy and feedback quality.", year: "2023" }
+  {
+    icon: <Crown size={32} strokeWidth={1.5} />,
+    title: 'Open Winner',
+    tournament: 'IIM Indore 2026 | Asian Parliamentary Debate',
+    desc: 'Won the open category.',
+    year: '2026',
+  },
+  {
+    icon: <Medal size={32} strokeWidth={1.5} />,
+    title: 'Open Semifinalist',
+    tournament: 'IIM Indore 2026 | Asian Parliamentary Debate',
+    desc: 'Reached the open semifinals.',
+    year: '2026',
+  },
+  {
+    icon: <Trophy size={32} strokeWidth={1.5} />,
+    title: 'Best Adjudicator',
+    tournament: 'IIM Indore 2026 | Asian Parliamentary Debate',
+    desc: 'Recognized for strong adjudication in the same circuit.',
+    year: '2026',
+  },
+  {
+    icon: <Crown size={32} strokeWidth={1.5} />,
+    title: 'Open Semifinalist',
+    tournament: 'IIT Kanpur Antaragni 2025 | Asian Parliamentary Debate',
+    desc: 'Reached the open semifinals.',
+    year: '2025',
+  },
+  {
+    icon: <Medal size={32} strokeWidth={1.5} />,
+    title: 'Reserve Break',
+    tournament: 'IIT Kanpur Antaragni 2025 | Asian Parliamentary Debate',
+    desc: 'Broke as reserve from a highly competitive field.',
+    year: '2025',
+  },
+  {
+    icon: <Trophy size={32} strokeWidth={1.5} />,
+    title: 'Best Speaker',
+    tournament: 'IIT Kanpur Antaragni 2025 | Asian Parliamentary Debate',
+    desc: 'Earned Best Speaker recognition for individual performance.',
+    year: '2025',
+  },
+  {
+    icon: <Crown size={32} strokeWidth={1.5} />,
+    title: 'Winner',
+    tournament: 'SVC Socio Speak CD’26',
+    desc: 'Awarded first position after competing against 20 teams in a debate on critical thinking and public discourse.',
+    year: '2026',
+  },
 ];
 
 const Achievements = () => {
   const targetRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: targetRef });
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-65%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-86%"]);
 
   return (
-    <section ref={targetRef} className="relative h-[300vh] bg-primary text-paper">
+    <section ref={targetRef} className="relative h-[380vh] bg-primary text-paper">
       <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
         <div className="max-w-7xl mx-auto w-full px-6 lg:px-12 mb-12">
           <motion.p initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="eyebrow mb-4 text-accent">Hall of Fame / 01</motion.p>
