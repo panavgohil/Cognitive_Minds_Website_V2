@@ -12,14 +12,13 @@ const Hero = () => {
       <div className="absolute right-[8%] top-[18%] hidden h-40 w-40 rotate-12 border-2 border-primary bg-accent shadow-poster lg:block" />
       <motion.div variants={containerVariants} initial="hidden" animate="show" className="relative z-10 mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl items-center gap-12 px-6 py-16 lg:grid-cols-12 lg:px-12">
         <div className="lg:col-span-9">
-          <motion.p variants={textVariants} className="eyebrow mb-6 text-oxblood">DTU&apos;s Debating & Public Speaking Society</motion.p>
+          <motion.p variants={textVariants} className="eyebrow mb-6 text-oxblood">DTU&apos;s Debating and Personality development society</motion.p>
           <motion.h1 variants={textVariants} className="max-w-6xl font-serif text-[clamp(5rem,12vw,10.5rem)] font-semibold leading-[0.74] text-primary">
             Cognitive
             <span className="block italic text-oxblood">Minds.</span>
           </motion.h1>
           <motion.div variants={textVariants} className="mt-10 flex max-w-3xl flex-col gap-6 border-l-4 border-accent pl-6 sm:flex-row sm:items-end sm:justify-between">
             <p className="max-w-lg text-base leading-7 text-secondary md:text-lg">We turn arguments into architecture and speakers into forces the room cannot ignore.</p>
-            <span className="eyebrow whitespace-nowrap text-primary">Est. at DTU / Delhi</span>
           </motion.div>
         </div>
         <motion.div variants={logoVariants} className="relative hidden lg:col-span-3 lg:block">

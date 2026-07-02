@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Menu, X, LogIn, LogOut, UserRound } from 'lucide-react';
 import { supabase } from '../../lib/supabaseClient';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
+import cmLogo from '../../assets/logo/cm-logo.jpg';
 
 const navLinks = [
   { name: 'Home', path: '/' },
@@ -50,7 +51,11 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-20">
           <div className="flex-shrink-0 cursor-pointer">
             <Link to="/" className="flex items-center gap-3 text-primary">
-              <span className="flex h-9 w-9 items-center justify-center bg-oxblood text-xs font-bold text-paper">CM</span>
+              <img
+                src={cmLogo}
+                alt="Cognitive Minds logo"
+                className="h-9 w-9 object-cover"
+              />
               <span className="font-serif text-xl font-semibold leading-none">Cognitive Minds</span>
             </Link>
           </div>
