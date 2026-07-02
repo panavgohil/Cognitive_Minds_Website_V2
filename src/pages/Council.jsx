@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from '../components/common/Navbar';
 import MemberCard from '../components/council/MemberCard';
 import { councilData } from '../data/council';
 
 const Council = () => {
+  const [selectedMember, setSelectedMember] = useState(null);
+
   // Filter data based on tier defined in council.js
   const seniors = councilData.filter(member => member.tier === 'senior');
   const juniors = councilData.filter(member => member.tier === 'junior');
+
+  const closeDetails = () => setSelectedMember(null);
+  const openDetails = (member) => setSelectedMember(member);
 
   return (
     <div className="min-h-screen bg-transparent pt-32 pb-24">
@@ -31,6 +37,7 @@ const Council = () => {
               <MemberCard 
                 key={member.id} 
                 member={member} 
+                onOpenDetails={openDetails}
               />
             ))}
           </div>
@@ -47,10 +54,76 @@ const Council = () => {
               <MemberCard 
                 key={member.id} 
                 member={member} 
+                onOpenDetails={openDetails}
               />
             ))}
           </div>
         </div>
+
+        <AnimatePresence>
+          {selectedMember && (
+            <motion.div
+              className="fixed inset-0 z-50 flex items-center justify-center bg-primary/55 px-4 py-8 backdrop-blur-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeDetails}
+            >
+              <motion.div
+                className="relative w-full max-w-2xl overflow-hidden border-2 border-primary bg-paper shadow-poster"
+                initial={{ opacity: 0, y: 24, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 24, scale: 0.98 }}
+                transition={{ duration: 0.25, ease: 'easeOut' }}
+                onClick={(event) => event.stopPropagation()}
+              >
+                <div className="absolute inset-x-0 top-0 h-2 bg-accent" />
+                <div className="flex items-start justify-between gap-4 border-b border-primary/10 px-6 py-5 sm:px-8">
+                  <div>
+                    <p className="eyebrow mb-2 text-oxblood">Council Profile</p>
+                    <h3 className="text-3xl font-serif text-primary sm:text-4xl">{selectedMember.name}</h3>
+                    <p className="mt-2 text-sm font-bold uppercase tracking-[0.2em] text-secondary">{selectedMember.role}</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={closeDetails}
+                    className="flex h-10 w-10 items-center justify-center border-2 border-primary text-primary transition-colors hover:bg-accent"
+                    aria-label="Close member details"
+                  >
+                    ×
+                  </button>
+                </div>
+
+                <div className="grid gap-8 px-6 py-6 sm:px-8 sm:py-8">
+                  <div className="rounded-2xl border border-primary/10 bg-background/60 p-5 sm:p-6">
+                    <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.26em] text-oxblood">From the Desk</p>
+                    <p className="text-lg leading-8 text-primary sm:text-xl sm:leading-9">“{selectedMember.quote}”</p>
+                  </div>
+
+                  <div>
+                    <p className="mb-4 text-[11px] font-bold uppercase tracking-[0.26em] text-oxblood">Comps Participated In</p>
+                    {selectedMember.comps.length > 0 ? (
+                      <div className="flex flex-wrap gap-3">
+                        {selectedMember.comps.map((comp) => (
+                          <span
+                            key={comp}
+                            className="rounded-full border border-primary/15 bg-background px-4 py-2 text-sm font-medium text-primary"
+                          >
+                            {comp}
+                          </span>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-sm leading-7 text-secondary">
+                        No contingent appearances recorded in the current roster data yet.
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

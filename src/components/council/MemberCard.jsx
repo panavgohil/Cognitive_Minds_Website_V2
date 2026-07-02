@@ -1,8 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Star } from 'lucide-react';
 import placeholderImg from '../../assets/council/placeholder.png';
 
-const MemberCard = ({ member }) => {
+const MemberCard = ({ member, onOpenDetails }) => {
   return (
     <motion.div 
       className="group relative flex flex-col cursor-pointer h-full"
@@ -50,6 +51,15 @@ const MemberCard = ({ member }) => {
               <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
             </svg>
           </a>
+          <button
+            type="button"
+            onClick={() => onOpenDetails?.(member)}
+            aria-label={`Open details for ${member.name}`}
+            title="Open member details"
+            className="inline-flex items-center justify-center text-secondary transition-colors duration-300 hover:text-accent"
+          >
+            <Star size={20} strokeWidth={1.6} fill="currentColor" />
+          </button>
         </div>
       </div>
     </motion.div>
